@@ -1,7 +1,7 @@
 # Databricks notebook source
 # DBTITLE 1,📋 Project Overview
 # MAGIC %md
-# MAGIC # Canada Mortgage Risk Reporting System
+# MAGIC # Canada Mortgage Risk Reporting System Trigger from Github
 # MAGIC
 # MAGIC ## 🎯 Purpose
 # MAGIC Comprehensive mortgage risk assessment and credit score analysis system for Canadian mortgage portfolios. This orchestration provides automated risk categorization, credit monitoring, and regulatory reporting capabilities.
