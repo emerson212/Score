@@ -1,0 +1,29 @@
+name: Sync to Databricks
+
+on:
+  push:
+    branches:
+      - main   # change to whichever branch your Databricks Repo tracks
+
+jobs:
+  update-databricks-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull latest changes into Databricks Repo
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_REPO_ID: ${{ secrets.DATABRICKS_REPO_ID }}
+        run: |
+          curl -s -X PATCH \
+            -H "Authorization: Bearer $DATABRICKS_TOKEN" \
+            -H "Content-Type: application/json" \
+            "$DATABRICKS_HOST/api/2.0/repos/$DATABRICKS_REPO_ID" \
+            -d '{"branch": "main"}' \
+            | tee response.json
+
+          # Fail the job if Databricks returned an error
+          if grep -q '"error_code"' response.json; then
+            echo "Databricks API returned an error"
+            exit 1
+          fi
